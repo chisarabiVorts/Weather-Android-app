@@ -47,7 +47,7 @@ fun CurrentWeatherInfo(
         )
 
         Text(
-            text = "${getWeatherDescription(code)} $minTemp°/$maxTemp°",
+            text = "${getWeatherDescription(code)} $minTemp°/ $maxTemp°",
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = Color.White,
                 fontSize = 20.sp

@@ -1,5 +1,6 @@
 package com.example.weather.presentation.views
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,9 +37,12 @@ import com.example.weather.presentation.ui.component.HourlyForecastItem
 import com.example.weather.presentation.ui.component.SunProgressBar
 import com.example.weather.presentation.ui.component.WeatherInfoGrid
 import com.example.weather.presentation.utils.WeatherIcons
+import com.example.weather.presentation.utils.formatUnixToHourMinute
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
-
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,8 +116,8 @@ fun WeatherLoadedScreen(
                         currentTemp = weather.currentWeather.tempC,
                         code = weather.currentWeather.condition.code,
                         iconUrlWeather = weather.currentWeather.condition.icon,
-                        minTemp = weather.forecast[1].day.minTempC,
-                        maxTemp = weather.forecast[1].day.maxTempC
+                        minTemp = weather.forecast[0].day.minTempC,
+                        maxTemp = weather.forecast[0].day.maxTempC
                     )
 
                     Spacer(modifier = Modifier.height(30.dp))
@@ -128,20 +132,23 @@ fun WeatherLoadedScreen(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        val now = LocalDate.now()
-                        val startOfNextDayEpochSeconds = now.plusDays(1)
-                            .atStartOfDay(ZoneId.systemDefault())
-                            .toEpochSecond()
-
                         LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(all = 8.dp),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            val todayHours = weather.getAllHourlyForecasts()
-                                .filter { it.timeEpoch < startOfNextDayEpochSeconds }
-                            items(todayHours) { hour ->
+                            val startOfDay = LocalDate.now().atStartOfDay()
+                            val endOfDay = startOfDay.plusDays(1)
+
+                            val remainingHours = weather.forecast[0].hours.filter { hour ->
+                                val hourTime = LocalDateTime.ofInstant(
+                                    Instant.ofEpochSecond(hour.timeEpoch),  // конвертируем Unix-время в локальное
+                                    ZoneId.systemDefault()
+                                )
+                                !hourTime.isBefore(startOfDay) && hourTime.isBefore(endOfDay)
+                            }
+                            items(remainingHours) { hour ->
                                 HourlyForecastItem(
                                     time = hour.timeEpoch,
                                     iconUrl = hour.icon,
@@ -182,9 +189,9 @@ fun WeatherLoadedScreen(
                                 Color.Black.copy(alpha = 0.25f),
                                 shape = RoundedCornerShape(16.dp)
                             ),
-                    ){
+                    ) {
                         SunProgressBar(
-                            sunriseTime =weather.forecast[1].astro.sunrise ,
+                            sunriseTime = weather.forecast[1].astro.sunrise,
                             sunsetTime = weather.forecast[1].astro.sunset,
                         )
                     }
