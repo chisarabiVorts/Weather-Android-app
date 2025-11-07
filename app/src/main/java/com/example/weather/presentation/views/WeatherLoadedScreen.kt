@@ -190,10 +190,13 @@ fun WeatherLoadedScreen(
                                 shape = RoundedCornerShape(16.dp)
                             ),
                     ) {
+                        val a= weather.forecast[0].astro.sunrise
+                        val b= weather.forecast[0].astro.sunset
                         SunProgressBar(
-                            sunriseTime = weather.forecast[1].astro.sunrise,
-                            sunsetTime = weather.forecast[1].astro.sunset,
+                            sunrisTime = weather.forecast[0].astro.sunrise,
+                            sunsTime = weather.forecast[0].astro.sunset,
                         )
+                        Log.d("Test","$a,$b")
                     }
 
                 }
