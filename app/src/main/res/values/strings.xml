@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="An_error_has_occurred">Произошла ошибка</string>
+    <string name="Try_again">Попробовать снова</string>
+    <string name="Loading">Загрузка</string>
+    <string name="Temperature">Температура</string>
+    <string name="It_feels_like">Ощущается как</string>
+    <string name="Wind">Ветер</string>
+    <string name="Pressure">Давление</string>
+    <string name="Humidity">Влажность</string>
+    <string name="Visibility">Видимость</string>
+    <string name="UV_index">UV-индекс</string>
+    <string name="Sunrise">Восход</string>
+    <string name="Sunset">Закат</string>
+</resources>
