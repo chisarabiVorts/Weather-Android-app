@@ -1,6 +1,5 @@
 package com.example.weather.presentation.views
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,21 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.weather.presentation.screen.ForecastDayUiModel
-import com.example.weather.presentation.screen.HourUiModel
-import com.example.weather.presentation.screen.WeatherUiModel
 import com.example.weather.presentation.ui.component.CurrentWeatherInfo
 import com.example.weather.presentation.ui.component.DailyForecastCard
 import com.example.weather.presentation.ui.component.HourlyForecastItem
 import com.example.weather.presentation.ui.component.SunProgressBar
 import com.example.weather.presentation.ui.component.WeatherInfoGrid
+import com.example.weather.presentation.uimodel.ForecastDayUiModel
+import com.example.weather.presentation.uimodel.HourUiModel
+import com.example.weather.presentation.uimodel.WeatherUiModel
 import com.example.weather.presentation.utils.WeatherIcons
-import com.example.weather.presentation.utils.formatUnixToHourMinute
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,7 +116,6 @@ fun WeatherLoadedScreen(
                         minTemp = weather.forecast[0].day.minTempC,
                         maxTemp = weather.forecast[0].day.maxTempC
                     )
-
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(
                         modifier = Modifier
@@ -143,7 +139,7 @@ fun WeatherLoadedScreen(
 
                             val remainingHours = weather.forecast[0].hours.filter { hour ->
                                 val hourTime = LocalDateTime.ofInstant(
-                                    Instant.ofEpochSecond(hour.timeEpoch),  // конвертируем Unix-время в локальное
+                                    Instant.ofEpochSecond(hour.timeEpoch),
                                     ZoneId.systemDefault()
                                 )
                                 !hourTime.isBefore(startOfDay) && hourTime.isBefore(endOfDay)
@@ -190,23 +186,16 @@ fun WeatherLoadedScreen(
                                 shape = RoundedCornerShape(16.dp)
                             ),
                     ) {
-                        val a= weather.forecast[0].astro.sunrise
-                        val b= weather.forecast[0].astro.sunset
                         SunProgressBar(
                             sunrisTime = weather.forecast[0].astro.sunrise,
                             sunsTime = weather.forecast[0].astro.sunset,
                         )
-                        Log.d("Test","$a,$b")
                     }
 
                 }
             }
         }
     }
-}
-
-private fun WeatherUiModel.getAllHourlyForecasts(): List<HourUiModel> {
-    return forecast.flatMap { it.hours }
 }
 
 private fun WeatherUiModel.getForecastDays(): List<ForecastDayUiModel> {

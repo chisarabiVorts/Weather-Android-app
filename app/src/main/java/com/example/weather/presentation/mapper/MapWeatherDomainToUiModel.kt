@@ -1,14 +1,14 @@
 package com.example.weather.presentation.mapper
 
 import com.example.weather.domain.entity.WeatherDomainModel
-import com.example.weather.presentation.screen.AstroUiModel
-import com.example.weather.presentation.screen.ConditionUiModel
-import com.example.weather.presentation.screen.CurrentWeatherUiModel
-import com.example.weather.presentation.screen.DayUiModel
-import com.example.weather.presentation.screen.ForecastDayUiModel
-import com.example.weather.presentation.screen.HourUiModel
-import com.example.weather.presentation.screen.LocationUiModel
-import com.example.weather.presentation.screen.WeatherUiModel
+import com.example.weather.presentation.uimodel.AstroUiModel
+import com.example.weather.presentation.uimodel.ConditionUiModel
+import com.example.weather.presentation.uimodel.CurrentWeatherUiModel
+import com.example.weather.presentation.uimodel.DayUiModel
+import com.example.weather.presentation.uimodel.ForecastDayUiModel
+import com.example.weather.presentation.uimodel.HourUiModel
+import com.example.weather.presentation.uimodel.LocationUiModel
+import com.example.weather.presentation.uimodel.WeatherUiModel
 
 
 class MapWeatherDomainToUiModel {

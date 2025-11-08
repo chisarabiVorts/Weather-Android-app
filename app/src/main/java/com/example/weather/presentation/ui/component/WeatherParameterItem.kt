@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.R
-import com.example.weather.presentation.screen.WeatherUiModel
+import com.example.weather.presentation.uimodel.WeatherUiModel
 import com.example.weather.presentation.utils.WeatherIcons
 
 

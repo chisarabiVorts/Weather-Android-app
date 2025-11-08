@@ -1,4 +1,4 @@
-package com.example.weather.presentation.screen
+package com.example.weather.presentation.uimodel
 
 
 data class CurrentWeatherUiModel(

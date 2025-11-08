@@ -12,4 +12,14 @@
     <string name="UV_index">UV-индекс</string>
     <string name="Sunrise">Восход</string>
     <string name="Sunset">Закат</string>
+    <string name="clearly">Ясно</string>
+    <string name="cloudy">Облачно</string>
+    <string name="rain">Дождь</string>
+    <string name="snow">Снег</string>
+    <string name="thunder">Гроза</string>
+    <string name="fog">Туман</string>
+    <string name="light_fog">Лёгкий туман</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
 </resources>
