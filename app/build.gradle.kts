@@ -67,4 +67,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
 }

@@ -1,6 +1,7 @@
 package com.example.weather.presentation.ui.component
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -44,35 +46,22 @@ fun SunProgressBar(
     iconSize: Dp = 24.dp,
     barHeight: Dp = 4.dp
 ) {
-    val formatter12 = DateTimeFormatter.ofPattern("hh:mm a")
-    val formatter24 = DateTimeFormatter.ofPattern("HH:mm")
-    val sunriseTimeUtc = LocalTime.parse(sunrisTime, formatter12)
-    val sunsetTimeUtc = LocalTime.parse(sunsTime, formatter12)
-    val today = LocalDate.now()
-    val sunriseLocal = LocalDateTime.of(today, sunriseTimeUtc)
-        .atZone(ZoneId.of("UTC"))
-        .withZoneSameInstant(ZoneId.systemDefault())
-        .toLocalTime()
 
-    val sunsetLocal = LocalDateTime.of(today, sunsetTimeUtc)
-        .atZone(ZoneId.of("UTC"))
-        .withZoneSameInstant(ZoneId.systemDefault())
-        .toLocalTime()
 
-    val formatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.ENGLISH)
+    val formatter = DateTimeFormatter.ofPattern("hh:mm a")
 
     val sunriseTime = LocalTime.parse(sunrisTime, formatter)
     val sunsetTime = LocalTime.parse(sunsTime, formatter)
 
-    val nowInMoscow = LocalTime.now(ZoneId.of("Europe/Moscow"))
-
     val sunriseMillis = sunriseTime.toSecondOfDay() * 1000L
     val sunsetMillis = sunsetTime.toSecondOfDay() * 1000L
-    val currentMillis = nowInMoscow.toSecondOfDay() * 1000L
+    val nowMoscow = LocalTime.now(ZoneId.of("Europe/Moscow"))
+    val currentMillis = nowMoscow.toSecondOfDay() * 1000L
+
     val progress = ((currentMillis - sunriseMillis).toFloat() / (sunsetMillis - sunriseMillis))
         .coerceIn(0f, 1f)
-    val sunriseHM = sunriseLocal.format(formatter24)
-    val sunsetHM = sunsetLocal.format(formatter24)
+    Log.d("Test","${progress * 100}%")
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.padding(16.dp)
@@ -168,13 +157,13 @@ fun SunProgressBar(
         ) {
 
             Text(
-                text = "$sunriseHM",
+                text = "$sunriseTime",
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.wrapContentSize(),
                 color = Color.White
             )
             Text(
-                text = "$sunsetHM",
+                text = "$sunsetTime",
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.wrapContentSize(),
                 color = Color.White
